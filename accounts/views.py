@@ -13,6 +13,11 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken.models import Token
 
 
+
+# Success Ok Request Users 
+def Success(request):
+    return render(request, "registration/success.html")
+
 # Index Accounts 
 def index(request):
     return render(request, "registration/index.html")
@@ -29,9 +34,20 @@ def index(request):
 #       args = {'form': form}
 #     return render(request, "registration/profile.html", args )
 #
+from .forms import EditProfileForm
 @login_required
 def profile(request):
-    return render(request, "registration/profile.html")
+    if request.method == "POST":
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid:
+            form.save()
+            return redirect('accounts:success')
+        else:
+            print("Error Save EditeProfiel")
+    else:
+        form = EditProfileForm(instance=request.user)
+        args = { 'from': form}
+    return render(request, "registration/profile.html", args)
 
 # Login System Fixed
 def login(request):
@@ -43,7 +59,7 @@ def login(request):
             auth.login(request,user)
             return redirect('accounts:profile')
         else:
-            return render (request,'registration/login.html', {'error':'Username or password is incorrect!'})
+            return render(request,'registration/login.html', {'error':'Username or password is incorrect!'})
     else:
         return render(request,'registration/login.html')
 

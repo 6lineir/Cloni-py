@@ -2,4 +2,27 @@
 {% block content %} 
 
 <h1>Profile User Page</h1>
+
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="col-sm">
+      <div class="col row">
+      <h3>First Name</h3>
+      <input type="text" name="first_name" value="{{ user.first_name }}" id="id_first_name">
+      <h3>Last Name</h3>
+      <input type="text" name="last_name" value="{{ user.last_name }}"  id="id_last_name">
+      <h3>Email</h3>
+      <input type="email" name="email" required value="{{ user.email }}" id="id_email">
+      </div><br/>
+      
+      <button class="btn btn-lg btn-success" type="submit">Update Profile</button>
+    </div>
+  </form>
+
+
+
+
+
+
 {% endblock %}

@@ -5,6 +5,7 @@ from .views import *
 app_name = 'accounts'
 urlpatterns = [
     path('', index, name="indexAcc"),
+    path('success/', Success, name="success"),
     path('profile/', profile, name="profile"),
     path('login/', login, name='login'),
     path('signup/', signup, name='signup'),
