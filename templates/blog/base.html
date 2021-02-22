@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'blog/img/logo.png' %}" />
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css' %}">
+
+    <title>My Theme</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'blog:Home' %}">My WebApplications</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'Api:blogApi' %}">API-List</a>
+                    </li>
+                </ul>
+                {% if user.is_authenticated %}
+                <form method = "POST" action="{% url 'accounts:logout' %}">
+                  {% csrf_token %}
+                <input class ="btn btn-danger" type="submit" value= "Logout" />
+                </form>
+                <a class="btn btn-warning" href="{% url 'accounts:profile' %}">Profile</a>
+                <span class="badge badge-primary">{{user.username }}</span>
+                {% else %}
+                <a class="btn-lg btn-success" href="{% url 'accounts:login' %}">Login</a>
+                <a class="btn-lg btn-danger" href="{% url 'accounts:signup' %}">Signup</a>
+                {% endif %}
+            </div>
+        </nav>
+      </header>
+
+
+
+    
+{% block content %}
+{% endblock %}
+
+
+
+
+
+
+    <!--Scripts starts-->
+    <script src="{% static 'blog/js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'blog/js/bootstrap.js' %}"></script>
+</body>
+</body>
+</html>

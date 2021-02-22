@@ -1,0 +1,34 @@
+{% extends '../blog/base.html' %}
+{% block content %} 
+
+<div class="container">
+    {% if error %}
+    {{ error }}
+
+    <br/>
+    <br/>
+    {% endif %}
+
+
+<div class="card text-center text-white bg-secondary ">
+        <h5 class="card-header bg-dark">Login Form!</h5>
+        <div class="card-body">
+    <form method = "POST" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+        username:
+        <br/>
+        <input type="text" name="username" />
+        <br/>
+        Password:
+        <br/>
+        <input type="password" name="password" />
+        <br/>
+        <br/>
+        <input class ="btn btn-primary btn-block" type="submit" value= "Login" />
+        
+    </form>
+
+</div>
+
+</div>
+{% endblock %}

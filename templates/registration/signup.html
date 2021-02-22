@@ -1,0 +1,42 @@
+{% extends '../blog/base.html' %}
+
+{% block content %}
+<div class="container">
+
+{% if error %}
+{{ error }}
+
+<br/>
+<br/>
+{% endif %}
+
+
+
+<div class="card text-center text-white bg-secondary ">
+    <h5 class="card-header bg-dark">Signup Form!</h5>
+    <div class="card-body">
+        <form method = "POST" action="{% url 'accounts:signup' %}">
+            {% csrf_token %}
+            username:
+            <br/>
+            <input type="text" name="username" />
+            <br/>
+            Password:
+            <br/>
+            <input type="password" name="password1" />
+            <br/>
+            confirm Password:
+            <br/>
+            <input type="password" name="password2" />
+            <br/>
+            <br/>
+            <input class ="btn btn-success btn-block" type="submit" value= "signup" />
+        </form>
+    </div>
+</div>
+
+
+
+
+</div>
+{% endblock %}
