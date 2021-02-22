@@ -22,18 +22,7 @@ def Success(request):
 def index(request):
     return render(request, "registration/index.html")
 
-# 
-# def profile(request):
-#     if request.method == "POST":
-#       form = EditProfileForm(request.POST, instance=request.user)
-#       if form.is_valid:
-#         form.save()
-#         return redirect('accounts:profile')
-#     else:
-#       form = EditProfileForm(instance=request.user)
-#       args = {'form': form}
-#     return render(request, "registration/profile.html", args )
-#
+# Edite Profile By From
 from .forms import EditProfileForm
 @login_required
 def profile(request):
@@ -49,7 +38,7 @@ def profile(request):
         args = { 'from': form}
     return render(request, "registration/profile.html", args)
 
-# Login System Fixed
+# Login System Fixed**
 def login(request):
     if request.user.is_authenticated:
         return redirect('accounts:profile')
@@ -63,7 +52,7 @@ def login(request):
     else:
         return render(request,'registration/login.html')
 
-# Logout System Fexed
+# Logout System Fexed**
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
@@ -78,7 +67,7 @@ def signup(request):
         if request.POST['password1'] == request.POST['password2']:
             try:
                 User.objects.get(username = request.POST['username'])
-                return render (request,'registration/signup.html', {'error':'Username is already taken!'})
+                return render (request,'registration/signup.html', {'error':'نام کاربری موجود است'})
             except User.DoesNotExist:
                 user = User.objects.create_user(request.POST['username'],password=request.POST['password1'])
                 token = Token.objects.get_or_create(user=user) #Create Auto Token User

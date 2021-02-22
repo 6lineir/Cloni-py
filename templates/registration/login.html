@@ -2,12 +2,15 @@
 {% block content %} 
 
 <div class="container">
-    {% if error %}
-    {{ error }}
+    
+<br>
+{% if error %}
+<div class="card bg-danger" style="padding: 10px">
+<h2>{{ error }}</h2>
+</div>
+{% endif %}
+<br/>
 
-    <br/>
-    <br/>
-    {% endif %}
 
 
 <div class="card text-center text-white bg-secondary ">
