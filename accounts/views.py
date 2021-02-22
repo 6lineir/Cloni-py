@@ -35,11 +35,13 @@ def profile(request):
 
 # Login System Fixed
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('accounts:profile')
     if request.method == 'POST':
         user = auth.authenticate(username=request.POST['username'],password = request.POST['password'])
         if user is not None:
             auth.login(request,user)
-            return redirect('accounts:indexAcc')
+            return redirect('accounts:profile')
         else:
             return render (request,'registration/login.html', {'error':'Username or password is incorrect!'})
     else:
@@ -54,6 +56,8 @@ def logout(request):
 
 # Signup System
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('accounts:profile')
     if request.method == "POST":
         if request.POST['password1'] == request.POST['password2']:
             try:

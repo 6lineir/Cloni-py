@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     #My Apps
     'blog.apps.BlogConfig',
     'accounts.apps.AccountsConfig',
+    'vertify.apps.VertifyConfig',
     #Pip Apps
     'rest_framework',
     'rest_framework.authtoken', # Token System Gnerate
