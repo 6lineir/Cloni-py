@@ -22,15 +22,31 @@ def Success(request):
 def index(request):
     return render(request, "registration/index.html")
 
+
+# VertiFy Accounts Form
+@login_required
+def vertifyAcc(request):
+    if request.method == "POST":
+        form = VertifyAccForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid:
+            author = request.user
+            form.save()
+            return redirect('accounts:success')
+    else:
+        form = VertifyAccForm(instance=request.user)
+        args = {'form': form}
+    return render(request, "registration/vertify-acc.html", args)
+
+
 # Edite Profile By From
-from .forms import EditProfileForm
+from .forms import EditProfileForm, VertifyAccForm
 @login_required
 def profile(request):
     if request.method == "POST":
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid:
             form.save()
-            return redirect('accounts:success')
+            return redirect('accounts:vertifyAcc')
         else:
             print("Error Save EditeProfiel")
     else:

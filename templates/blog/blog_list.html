@@ -1,0 +1,31 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+<div class="row">
+
+  {% for Blog in object_list %}
+  <div class="col-3">
+    <div class="card">
+      <img class="card-img-top" src="{{ Blog.image.url }}" alt="{{ Blog.title}}">
+      <h3 class="card-title">{{ Blog.title }}</h3>
+      <div class="card-body">
+        <span class="bg-warning">{{ Blog.author }}</span>
+        <p class="card-text">{{ Blog.body }}</p>
+        <span class="bg-info">{{ Blog.status }}</span>
+        <a href="{{Blog.slug}}" class="btn btn-primary">View</a>
+      </div>
+      <span class="card-footer bg-secondary">{{ Blog.updated }}</span>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+
+
+
+
+
+{% endblock %}

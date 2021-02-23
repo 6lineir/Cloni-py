@@ -63,6 +63,13 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+# Rest API Middleware Set
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
+}
+
 ROOT_URLCONF = 'conf.urls'
 
 TEMPLATES = [

@@ -1,0 +1,30 @@
+{% extends '../blog/base.html' %}
+{% block content %} 
+
+<div class="container">
+    
+<br>
+{% if error %}
+<div class="card bg-danger" style="padding: 10px">
+<h2>{{ error }}</h2>
+</div>
+{% endif %}
+<br/>
+
+
+
+<div class="card text-center text-white bg-secondary ">
+        <h5 class="card-header bg-dark">Vertify Account Form!</h5>
+        <div class="card-body">
+            <form method="POST" action="{% url 'accounts:vertifyAcc' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }} 
+                  <br>
+                  <br>
+                  <button class="btn btn-lg btn-success" type="submit">Update Profile</button>
+              </form>
+
+</div>
+
+</div>
+{% endblock %}

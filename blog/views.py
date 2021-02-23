@@ -1,10 +1,13 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView, DetailView
 from .models import Blog
 # Create your views here.
 
-def index(request):
-    blog = Blog.objects.all()
-    context = {
-        'blog' : blog
-    }
-    return render(request, "blog/index.html", context)
+class BlogList(ListView):
+    def get_queryset(self):
+        return Blog.objects.filter(public=True)
+
+class BlogDetail(DetailView):
+    def get_queryset(self):
+        return Blog.objects.filter(public=True)

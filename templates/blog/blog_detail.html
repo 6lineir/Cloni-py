@@ -1,0 +1,29 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+<div class="row">
+
+  <div class="col-12">
+    <div class="card">
+      <img class="card-img-top" src="{{ object.image.url }}" alt="{{ object.title}}">
+      <h3 class="card-title">{{ object.title }}</h3>
+      <div class="card-body">
+        <span class="bg-warning">{{ object.author }}</span>
+        <p class="card-text">{{ object.body }}</p>
+        <span class="bg-info">{{ object.status }}</span>
+        <a href="#" class="btn btn-primary">View</a>
+      </div>
+      <span class="card-footer bg-secondary">{{ object.updated }}</span>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}

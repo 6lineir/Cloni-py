@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from vertify.models import UserProfile
+
 
 class EditProfileForm(forms.ModelForm):
   class Meta:
@@ -16,13 +16,15 @@ class EditProfileForm(forms.ModelForm):
 #     class Meta:
 #       model = UserProfile
 #       fields = (
-#         "imageVertify1",
-#          "imageVertify2"
+#         "phone"
+#         "telphone"
 #       )
+from vertify.models import UserProfile
 class VertifyAccForm(forms.ModelForm):
     class Meta:
       model = UserProfile
       fields = (
+        "codeMelli",
         "imageAcc",
-         "imageCode"
+        "imageCode",
       )
