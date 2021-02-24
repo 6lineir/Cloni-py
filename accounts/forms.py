@@ -23,8 +23,4 @@ from vertify.models import UserProfile
 class VertifyAccForm(forms.ModelForm):
     class Meta:
       model = UserProfile
-      fields = (
-        "codeMelli",
-        "imageAcc",
-        "imageCode",
-      )
+      fields = ('__all__')

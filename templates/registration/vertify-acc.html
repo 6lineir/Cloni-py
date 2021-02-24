@@ -18,7 +18,7 @@
         <div class="card-body">
             <form method="POST" action="{% url 'accounts:vertifyAcc' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }} 
+                {{ formv.as_p }} 
                   <br>
                   <br>
                   <button class="btn btn-lg btn-success" type="submit">Update Profile</button>

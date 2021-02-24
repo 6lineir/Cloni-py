@@ -11,7 +11,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 # from .forms import EditProfileForm , VertifyForm
 from rest_framework.authtoken.models import Token
-
+from .forms import EditProfileForm, VertifyAccForm
 
 
 # Success Ok Request Users 
@@ -27,19 +27,18 @@ def index(request):
 @login_required
 def vertifyAcc(request):
     if request.method == "POST":
-        form = VertifyAccForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid:
-            author = request.user
-            form.save()
+        formv = VertifyAccForm(request.POST, request.FILES, instance=request.user)
+        if formv.is_valid:
+            formv.save()
             return redirect('accounts:success')
     else:
-        form = VertifyAccForm(instance=request.user)
-        args = {'form': form}
+        formv = VertifyAccForm(instance=request.user)
+        args = {'formv': formv}
     return render(request, "registration/vertify-acc.html", args)
 
 
 # Edite Profile By From
-from .forms import EditProfileForm, VertifyAccForm
+
 @login_required
 def profile(request):
     if request.method == "POST":

@@ -1,10 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
-
 # Create your models here.
 class UserProfile(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length = 16)
     telphone = models.CharField(max_length = 16)
     codeMelli = models.CharField(max_length = 10, unique=True)
