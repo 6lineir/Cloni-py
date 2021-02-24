@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -9,11 +10,10 @@ from django.views.generic import (
 )
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-# from .forms import EditProfileForm , VertifyForm
 from rest_framework.authtoken.models import Token
-from .forms import EditProfileForm, VertifyAccForm
+from .forms import EditProfileForm
 
-
+from vertify.models import UserProfile
 # Success Ok Request Users 
 def Success(request):
     return render(request, "registration/success.html")
@@ -23,25 +23,10 @@ def index(request):
     return render(request, "registration/index.html")
 
 
-# VertiFy Accounts Form
-@login_required
-def vertifyAcc(request):
-    if request.method == "POST":
-        formv = VertifyAccForm(request.POST, request.FILES, instance=request.user)
-        if formv.is_valid:
-            formv.save()
-            return redirect('accounts:success')
-    else:
-        formv = VertifyAccForm(instance=request.user)
-        args = {'formv': formv}
-    return render(request, "registration/vertify-acc.html", args)
-
-
 # Edite Profile By From
-
 @login_required
 def profile(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid:
             form.save()
@@ -52,6 +37,26 @@ def profile(request):
         form = EditProfileForm(instance=request.user)
         args = { 'from': form}
     return render(request, "registration/profile.html", args)
+
+# VertiFy Accounts Form
+# @login_required
+class vertifyAcc(LoginRequiredMixin, CreateView):
+    model = UserProfile
+    fields = [
+        "phone",
+        "telphone",
+        "codeMelli",
+        "imageAcc",
+        "imageCode",
+        "activeAcc",
+    ]
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+    success_url = reverse_lazy('accounts:success')
+    template_name = "registration/vertify-acc.html"
 
 # Login System Fixed**
 def login(request):
@@ -92,17 +97,3 @@ def signup(request):
             return render (request,'registration/signup.html', {'error':'Password does not match!'})
     else:
         return render(request,'registration/signup.html')
-
-
-
-
-# def vertifyAccount(request):
-#     if request.method == "POST":
-#       form = VertifyForm(request.POST, request.FILES, instance=request.user )
-#       if form.is_valid():
-#         form.save()
-#         return redirect('accounts:vertify')
-#     else:
-#       form = VertifyForm(instance=request.user)
-#       args = {'form': form}
-#     return render(request, "registration/vertify.html", args)

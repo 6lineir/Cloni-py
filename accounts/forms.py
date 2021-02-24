@@ -11,16 +11,3 @@ class EditProfileForm(forms.ModelForm):
       "first_name",
       "email",
     )
-
-# class VertifyPhoneForm(forms.ModelForm):
-#     class Meta:
-#       model = UserProfile
-#       fields = (
-#         "phone"
-#         "telphone"
-#       )
-from vertify.models import UserProfile
-class VertifyAccForm(forms.ModelForm):
-    class Meta:
-      model = UserProfile
-      fields = ('__all__')

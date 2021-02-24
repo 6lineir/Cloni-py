@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from .serializers import BlogSerializer, UsersSerializer
 from blog.models import Blog
 
@@ -13,7 +13,9 @@ class BlogApi(ListAPIView):
 class PostApi(RetrieveAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
-
+class BlogCreateApi(CreateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
 
 
 from django.contrib.auth.models import User
