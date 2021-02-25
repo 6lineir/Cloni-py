@@ -18,7 +18,7 @@ class BlogCreateApi(CreateAPIView):
     serializer_class = BlogSerializer
 
 
-from django.contrib.auth.models import User
+from accounts.models import User
 # /api/users/
 class UsersApi(ListAPIView):
     queryset = User.objects.all()

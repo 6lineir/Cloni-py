@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
-from django.contrib.auth.models import User
+from accounts.models import User
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -17,7 +17,7 @@ from .forms import EditProfileForm
 from vertify.models import UserProfile
 # Success Ok Request Users 
 def Success(request):
-    return render(request, "registration/success.html")
+    return render(request, "registration/pop/success.html")
 
 # Index Accounts 
 def index(request):
@@ -57,7 +57,7 @@ class vertifyAcc(LoginRequiredMixin, CreateView):
     def form_invalid(self, form):
         return super().form_invalid(form)
     success_url = reverse_lazy('accounts:success')
-    template_name = "registration/vertify-acc.html"
+    template_name = "registration/vertify-Acc.html"
 
 # Login System Fixed**
 def login(request):

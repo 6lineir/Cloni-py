@@ -17,7 +17,7 @@ class BlogSerializer(serializers.ModelSerializer):
 		fields = ('__all__')
 
 
-from django.contrib.auth.models import User
+from accounts.models import User
 class UsersSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
