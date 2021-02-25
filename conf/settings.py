@@ -148,7 +148,7 @@ USE_TZ = True
 
 
 #Account Settings
-# AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = 'accounts:ogin'
 # LOGOUT_REDIRECT_URL = 'indexcc'
 
