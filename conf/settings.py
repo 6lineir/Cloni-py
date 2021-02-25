@@ -149,7 +149,7 @@ USE_TZ = True
 
 #Account Settings
 AUTH_USER_MODEL = 'accounts.User'
-LOGIN_REDIRECT_URL = 'accounts:ogin'
+LOGIN_REDIRECT_URL = 'accounts:login'
 # LOGOUT_REDIRECT_URL = 'indexcc'
 
 # Static files (CSS, JavaScript, Images)

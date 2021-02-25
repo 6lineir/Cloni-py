@@ -20,17 +20,7 @@
     <div class="card-body">
         <form method = "POST" action="{% url 'accounts:signup' %}">
             {% csrf_token %}
-            username:
-            <br/>
-            <input type="text" required name="username" />
-            <br/>
-            Password:
-            <br/>
-            <input type="password" required name="password1" />
-            <br/>
-            confirm Password:
-            <br/>
-            <input type="password" required name="password2" />
+{{form.as_p}}
             <br/>
             <br/>
             <input class ="btn btn-success btn-block" type="submit" value= "signup" />

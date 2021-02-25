@@ -7,6 +7,9 @@ class Category(models.Model):
     slug = models.SlugField(max_length = 50)
     def __str__(self):
         return self.title
+    class Meta:
+        verbose_name = "دسته‌بندی"
+        verbose_name_plural = "دسته‌بندی ها"
 
 
 # Models Blog Posts
@@ -29,4 +32,7 @@ class Blog(models.Model):
     updated = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.title
+    class Meta:
+        verbose_name = "وبلاگ"
+        verbose_name_plural = "وبلاگ ها"
     

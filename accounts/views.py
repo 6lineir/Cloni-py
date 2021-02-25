@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
-from accounts.models import User
+from .models import User
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -12,7 +12,7 @@ from django.views.generic import (
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken.models import Token
-from .forms import EditProfileForm
+from .forms import EditProfileForm, SignupForm
 
 from vertify.models import UserProfile
 # Success Ok Request Users 
@@ -40,16 +40,11 @@ def profile(request):
     return render(request, "registration/profile.html", args)
 
 # VertiFy Accounts Form
-# @login_required
 class vertifyAcc(LoginRequiredMixin, CreateView):
     model = UserProfile
     fields = [
-        "phone",
-        "telphone",
-        "codeMelli",
         "imageAcc",
         "imageCode",
-        "activeAcc",
     ]
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -79,22 +74,46 @@ def logout(request):
         auth.logout(request)
     return redirect('blog:Home')
 
-
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.sites.shortcuts import get_current_site
+from django.http import HttpResponse
+from .tokens import account_activation_token
 # Signup System
-def signup(request):
-    if request.user.is_authenticated:
-        return redirect('accounts:profile')
-    if request.method == "POST":
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                User.objects.get(username = request.POST['username'])
-                return render (request,'registration/signup.html', {'error':'نام کاربری موجود است'})
-            except User.DoesNotExist:
-                user = User.objects.create_user(request.POST['username'],password=request.POST['password1'])
-                token = Token.objects.get_or_create(user=user) #Create Auto Token User
-                auth.login(request,user)
-                return redirect('accounts:indexAcc')
-        else:
-            return render (request,'registration/signup.html', {'error':'Password does not match!'})
+class signup(CreateView):
+    form_class = SignupForm
+    template_name = "registration/signup.html"
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.is_active = False
+        user.save()
+        current_site = get_current_site(self.request)
+        mail_subject = 'فعال سازی حساب کاربری'
+        massage = render_to_string('registration/acc_activate.html',{
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        to_email = form.cleaned_data.get('email')
+        email = EmailMessage(
+            mail_subject, massage, to=[to_email]
+        )
+        email.send()
+        return HttpResponse('لینک فعال سازی برای ایمیل شما ارسال شد.')
+# Activations Account Link Chek And Create Token Api
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        this_Token = Token.objects.get_or_create(user=user) #Create Auto Token User
+        user.save()
+        return HttpResponse('حساب کاربری با موفقیت فعال شد  <a href="/accounts/login/">ورود</a>')
     else:
-        return render(request,'registration/signup.html')
+        return HttpResponse('لینک فعال سازی منقضی شده  <a href="/accounts/login/">ورود</a>')

@@ -5,3 +5,6 @@ class UserProfile(models.Model):
     author = models.OneToOneField(User, on_delete=models.CASCADE)
     imageAcc = models.ImageField(upload_to='Users/%Y/%m/', blank=True)
     imageCode= models.ImageField(upload_to='Users/%Y/%m/', blank=True)
+    class Meta:
+        verbose_name = "پروفایل"
+        verbose_name_plural = "پروفایل ها"

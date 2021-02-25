@@ -1,5 +1,5 @@
 from django.contrib.auth import views
-from django.urls import path
+from django.urls import path, re_path
 from .views import *
 from django.contrib.auth import views as auth_views
 
@@ -11,7 +11,8 @@ urlpatterns = [
     path('vertify/', vertifyAcc.as_view(), name="vertifyAcc"),
     path('profile/', profile, name="profile"),
     path('login/', login, name='login'),
-    path('signup/', signup, name='signup'),
+    path('signup/', signup.as_view(), name='signup'),
+    path('activate/<uidb64>/<token>/', activate, name='activate'),
     path('logout/', logout, name='logout'),
     path('change-password/', auth_views.PasswordChangeView.as_view(), name='password_change')
 
