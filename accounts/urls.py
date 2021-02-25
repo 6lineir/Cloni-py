@@ -1,6 +1,8 @@
 from django.contrib.auth import views
 from django.urls import path
 from .views import *
+from django.contrib.auth import views as auth_views
+
 
 app_name = 'accounts'
 urlpatterns = [
@@ -10,7 +12,8 @@ urlpatterns = [
     path('profile/', profile, name="profile"),
     path('login/', login, name='login'),
     path('signup/', signup, name='signup'),
-    path('logout/', logout, name='logout')
+    path('logout/', logout, name='logout'),
+    path('change-password/', auth_views.PasswordChangeView.as_view(), name='password_change')
 
 ]
 # accounts/login/ [name='login']
