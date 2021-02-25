@@ -22,10 +22,7 @@
                     </li>
                 </ul>
                 {% if user.is_authenticated %}
-                <form method = "POST" action="{% url 'accounts:logout' %}">
-                  {% csrf_token %}
-                <input class ="btn btn-danger" type="submit" value= "Logout" />
-                </form>
+                <a class="btn btn-danger" href="{% url 'accounts:logout' %}">Logout</a>
                 <a class="btn btn-warning" href="{% url 'accounts:profile' %}">Profile</a>
                 <span class="badge badge-primary">{{user.username }}</span>
                 {% else %}

@@ -74,7 +74,7 @@ def login(request):
 
 # Logout System Fexed**
 def logout(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         auth.logout(request)
     return redirect('blog:Home')
 
