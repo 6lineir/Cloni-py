@@ -1,8 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
-from .serializers import BlogSerializer, UsersSerializer
-from blog.models import Blog
+from .serializers import BlogSerializer, UsersSerializer, addSerial
+from blog.models import Blog, Category
+from rest_framework.permissions import IsAuthenticated
 
+
+class addAPI(CreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = addSerial
+    permission_classes = (IsAuthenticated,)
+    
 
 
 # /api/
