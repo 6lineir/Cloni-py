@@ -13,6 +13,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken.models import Token
 from .forms import EditProfileForm, SignupForm
+from .mixings import RedirectUserMixin
 
 from vertify.models import UserProfile
 # Success Ok Request Users 
@@ -20,6 +21,7 @@ def Success(request):
     return render(request, "registration/pop/success.html")
 
 # Index Accounts 
+@login_required
 def index(request):
     return render(request, "registration/index.html")
 
@@ -82,7 +84,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 from .tokens import account_activation_token
 # Signup System
-class signup(CreateView):
+class signup(CreateView, RedirectUserMixin):
     form_class = SignupForm
     template_name = "registration/signup.html"
     def form_valid(self, form):
@@ -103,6 +105,8 @@ class signup(CreateView):
         )
         email.send()
         return HttpResponse('لینک فعال سازی برای ایمیل شما ارسال شد.')
+
+
 # Activations Account Link Chek And Create Token Api
 def activate(request, uidb64, token):
     try:

@@ -1,5 +1,7 @@
 {% autoescape off %}
-Hi{{ user.username}} 
+Hi  {{ user.username}} 
 Your Activated Link:
+===============================
 http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
+===============================
 {% endautoescape %}
