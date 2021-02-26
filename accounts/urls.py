@@ -6,7 +6,8 @@ from django.contrib.auth import views as auth_views
 
 app_name = 'accounts'
 urlpatterns = [
-    path('', index, name="indexAcc"),
+    path('', index.as_view(), name="indexAcc"),
+    path('add-blog/', blogCreate.as_view(), name="add-blog"),
     path('success/', Success, name="success"),
     path('vertify/', vertifyAcc.as_view(), name="vertifyAcc"),
     path('profile/', profile, name="profile"),

@@ -39,7 +39,7 @@
 
 
 <div class="card text-center">
-<form method="POST" action="{% url 'accounts:vertifyAcc' %}">
+<form method="POST" action="{% url 'accounts:vertifyAcc' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="col-sm">
 {{form.as_p}}

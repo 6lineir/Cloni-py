@@ -14,16 +14,28 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken.models import Token
 from .forms import EditProfileForm, SignupForm
 from .mixings import RedirectUserMixin
-
 from vertify.models import UserProfile
+from blog.models import Blog
+
+
+
+
 # Success Ok Request Users 
 def Success(request):
     return render(request, "registration/pop/success.html")
 
 # Index Accounts 
-@login_required
-def index(request):
-    return render(request, "registration/index.html")
+class index(LoginRequiredMixin, ListView):
+    queryset = Blog.objects.all()
+    template_name = "registration/index.html"
+
+# Create Blog In Dashboard
+class blogCreate(CreateView):
+    model = Blog
+    fields = ['author','title','slug','status','body','image','public','publish']
+    success_url = reverse_lazy('accounts:success')
+    template_name = "registration/create-blog.html"
+
 
 
 # Edite Profile By From
