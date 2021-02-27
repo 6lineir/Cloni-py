@@ -21,16 +21,6 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Like SB Admin?</strong> Try out <a href="#" class="alert-link">SB Admin 2</a> for additional features!
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
@@ -133,20 +123,27 @@
                                         <thead>
                                             <tr>
                                                 <th>عنوان</th>
-                                                <th>کاربر</th>
+                            {% if user.is_superuser %}<th>کاربر</th>{% endif %} 
                                                 <th>وضعیت</th>
                                                 <th>زمان ارسال</th>
                                                 <th>انتشار</th>
+                                                <th>نمایش/ویرایش</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         {% for blog in object_list %}
                                             <tr>
                                                 <td>{{ blog.title }}</td>
-                                                <td>{{ blog.author }}</td>
-                                                <td>{{ blog.status }}</td>
+                            {% if user.is_superuser %}<td>{{ blog.author }}</td>{% endif %}
+                                                <td>{% if blog.status == 'n' %}جدید 
+                                                    {% elif blog.status == 'i' %}در حال بررسی 
+                                                    {% elif blog.status == 'p' %}انتشار یافته
+                                                    {% elif blog.status == 'b' %}بایگانی
+                                                    {% endif %}
+                                                </td>
                                                 <td>{{ blog.publish }}</td>
-                                                <td>{{ blog.public }}</td>
+                                                <td>{% if blog.public == 1 %}بله{% else %}خیر{% endif %}</td>
+                                                <td>دکمه نمایش</td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
